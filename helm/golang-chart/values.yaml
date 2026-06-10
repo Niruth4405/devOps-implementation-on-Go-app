@@ -1,0 +1,25 @@
+replicaCount: 2
+
+image:
+  repository: niruth03/golang
+  tag: "v1"
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  hosts:
+    - host: golang.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: golang
+                port:
+                  number: 80
