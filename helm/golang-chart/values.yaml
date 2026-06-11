@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: niruth03/golang
-  tag: "27323559532"
+  tag: "27325061317"
 
 service:
   type: ClusterIP
