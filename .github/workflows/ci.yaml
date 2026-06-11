@@ -31,14 +31,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
-    steps:
+    steps:                          # ← Fixed: was 3 spaces, now 4
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
 
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
-          version: v1.59.1
+          version: v1.64.8
 
   push:
     runs-on: ubuntu-latest
@@ -67,7 +72,6 @@ jobs:
 
   update-newtag-in-helm-chart:
     runs-on: ubuntu-latest
-
     needs: push
 
     steps:
@@ -78,7 +82,7 @@ jobs:
 
       - name: Update tag in Helm chart
         run: |
-          sed -i 's/tag: .*/tag: "${{github.run_id}}"/' helm/golang-chart/values.yaml
+          sed -i 's/tag: .*/tag: "${{ github.run_id }}"/' helm/golang-chart/values.yaml
 
       - name: Commit and push changes
         run: |
